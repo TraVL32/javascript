@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Таблица</title>
+</head>
+<body>
+    <p>Откройте консоль браузера (F12 -> вкладка Console), чтобы увидеть результат.</p>
+    <label>Число строк: <input type="number" id="rows" value="5"></label>
+    <button id="draw-btn">Рисовать</button>
+
+    <script>
+        'use strict';
+
+        let btn = document.getElementById('draw-btn');
+        
+        btn.addEventListener('click', function() {
+            let rowsCount = Number(document.getElementById('rows').value);
+            let animals = ['dog', 'dog', 'dog', 'cat', 'cat'];
+
+            for (let row = 0; row < rowsCount; row++) {
+                let rowString = "";
+
+                for (let col = 0; col < 6; col++) {
+                    let index = (row + col) % 5; 
+                    
+                    rowString = rowString + animals[index] + "\t";
+                }
+
+                console.log(rowString);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Пенсионный калькулятор</title>
+</head>
+<body>
+    <form id="calc-form">
+        <label>Возраст: <input type="number" id="age" required></label><br><br>
+        
+        <label><input type="radio" name="gender" value="m" required> Мужчина</label>
+        <label><input type="radio" name="gender" value="f" required> Женщина</label><br><br>
+        
+        <button type="submit">Рассчитать</button><br><br>
+        
+        <textarea id="result" rows="4" cols="35" readonly></textarea>
+    </form>
+
+    <script>
+        'use strict';
+        
+        let form = document.getElementById('calc-form');
+        
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            let age = Number(document.getElementById('age').value);
+            let gender = form.elements['gender'].value;
+            let message = "";
+
+            if (age >= 0 && age <= 17) {
+                message = "Вам работать ещё рано — учитесь";
+            } else if (gender === 'm' && age >= 18 && age <= 59) {
+                message = "Вам ещё работать и работать";
+            } else if (gender === 'f' && age >= 18 && age <= 54) {
+                message = "Вам ещё работать и работать";
+            } else if (gender === 'm' && age >= 60 && age <= 64) {
+                message = "Скоро пенсия!";
+            } else if (gender === 'f' && age >= 55 && age <= 59) {
+                message = "Скоро пенсия!";
+            } else if (gender === 'm' && age >= 65) {
+                message = "Вам пора на пенсию";
+            } else if (gender === 'f' && age >= 60) {
+                message = "Вам пора на пенсию";
+            } else {
+                message = "Да кто ты такой?";
+            }
+
+            document.getElementById('result').value = message;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Простые числа</title>
+</head>
+<body>
+    <label>Введите число n: <input type="number" id="n" value="10"></label>
+    <button id="find-btn">Найти</button>
+    <p id="primes-out"></p>
+
+    <script>
+        'use strict';
+
+        let btn = document.getElementById('find-btn');
+        
+        btn.addEventListener('click', function() {
+            let n = Number(document.getElementById('n').value);
+            let resultText = "";
+
+            for (let i = 2; i <= n; i++) {
+                let isPrime = true;
+
+                for (let j = 2; j < i; j++) {
+                    if (i % j === 0) {
+                        isPrime = false;
+                        break;
+                    }
+                }
+
+                if (isPrime === true) {
+                    resultText = resultText + i + " ";
+                }
+            }
+
+            document.getElementById('primes-out').innerText = "Простые числа: " + resultText;
+        });
+    </script>
+</body>
+</html>
