@@ -5,18 +5,26 @@
     <title>Простые числа</title>
 </head>
 <body>
-    <label>Введите число n: <input type="number" id="n" value="10"></label>
-    <button id="find-btn">Найти</button>
+    <form id="prime-form">
+        <label>
+            Введите число n:
+            <input type="number" id="n" value="10" required>
+        </label>
+        <button type="submit">Найти</button>
+    </form>
+
     <p id="primes-out"></p>
 
     <script>
         'use strict';
 
-        let btn = document.getElementById('find-btn');
-        
-        btn.addEventListener('click', function() {
+        let form = document.getElementById('prime-form');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
             let n = Number(document.getElementById('n').value);
-            let resultText = "";
+            let resultText = '';
 
             for (let i = 2; i <= n; i++) {
                 let isPrime = true;
@@ -29,11 +37,11 @@
                 }
 
                 if (isPrime === true) {
-                    resultText = resultText + i + " ";
+                    resultText = resultText + i + ' ';
                 }
             }
 
-            document.getElementById('primes-out').innerText = "Простые числа: " + resultText;
+            document.getElementById('primes-out').innerText = 'Простые числа: ' + resultText;
         });
     </script>
 </body>

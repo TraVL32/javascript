@@ -6,25 +6,32 @@
 </head>
 <body>
     <p>Откройте консоль браузера (F12 -> вкладка Console), чтобы увидеть результат.</p>
-    <label>Число строк: <input type="number" id="rows" value="5"></label>
-    <button id="draw-btn">Рисовать</button>
+
+    <form id="table-form">
+        <label>
+            Число строк:
+            <input type="number" id="rows" value="5" required>
+        </label>
+        <button type="submit">Рисовать</button>
+    </form>
 
     <script>
         'use strict';
 
-        let btn = document.getElementById('draw-btn');
-        
-        btn.addEventListener('click', function() {
+        let form = document.getElementById('table-form');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
             let rowsCount = Number(document.getElementById('rows').value);
             let animals = ['dog', 'dog', 'dog', 'cat', 'cat'];
 
             for (let row = 0; row < rowsCount; row++) {
-                let rowString = "";
+                let rowString = '';
 
                 for (let col = 0; col < 6; col++) {
-                    let index = (row + col) % 5; 
-                    
-                    rowString = rowString + animals[index] + "\t";
+                    let index = (row + col) % 5;
+                    rowString = rowString + animals[index] + '\t';
                 }
 
                 console.log(rowString);

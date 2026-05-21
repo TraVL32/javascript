@@ -5,38 +5,45 @@
     <title>Считать ворон</title>
 </head>
 <body>
-    <label>Сколько ворон: <input type="number" id="num"></label>
-    <button id="btn">Считать</button>
+    <form id="crow-form">
+        <label>
+            Сколько ворон:
+            <input type="number" id="num" required>
+        </label>
+        <button type="submit">Считать</button>
+    </form>
 
     <script>
         'use strict';
 
-        let btn = document.getElementById('btn');
-        btn.addEventListener('click', function() {
+        let form = document.getElementById('crow-form');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
             let num = Number(document.getElementById('num').value);
             let lastDigit = num % 10;
             let lastTwoDigits = num % 100;
-            
-            let word = "";
+            let word = '';
 
             if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
-                word = "ворон";
+                word = 'ворон';
             } else {
                 switch (lastDigit) {
                     case 1:
-                        word = "ворона";
+                        word = 'ворона';
                         break;
                     case 2:
                     case 3:
                     case 4:
-                        word = "вороны";
+                        word = 'вороны';
                         break;
                     default:
-                        word = "ворон";
+                        word = 'ворон';
                 }
             }
 
-            alert("На ветке сидит " + num + " " + word);
+            alert('На ветке сидит ' + num + ' ' + word);
         });
     </script>
 </body>

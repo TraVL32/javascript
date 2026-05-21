@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Лаба 4</title>
+</head>
+<body>
+    <h1>Лабораторная работа 4</h1>
+    <p>Открой консоль браузера</p>
+
+    <script>
+        'use strict';
+
+        class Book {
+            #price;
+
+            constructor(title, pubYear, price) {
+                this.title = title;
+                this.pubYear = pubYear;
+                this.price = price;
+            }
+
+            get title() {
+                return this._title;
+            }
+
+            set title(value) {
+                if (typeof value !== 'string' || value.trim() === '') {
+                    console.log('Ошибка: title не должен быть пустой строкой');
+                    return;
+                }
+                this._title = value;
+            }
+
+            get pubYear() {
+                return this._pubYear;
+            }
+
+            set pubYear(value) {
+                if (typeof value !== 'number' || value <= 0) {
+                    console.log('Ошибка: pubYear должен быть положительным числом');
+                    return;
+                }
+                this._pubYear = value;
+            }
+
+            get price() {
+                return this.#price;
+            }
+
+            set price(value) {
+                if (typeof value !== 'number' || value <= 0) {
+                    console.log('Ошибка: price должен быть положительным числом');
+                    return;
+                }
+                this.#price = value;
+            }
+
+            show() {
+                console.log('Книга: ' + this.title + ', цена: ' + this.price);
+            }
+
+            static compare(book1, book2) {
+                return book1.pubYear - book2.pubYear;
+            }
+        }
+
+        const book1 = new Book('JavaScript для начинающих', 2020, 850);
+        book1.show();
+
+        book1.title = 'Новая книга';
+        book1.pubYear = 2024;
+        book1.price = 1200;
+        book1.show();
+
+        book1.title = '';
+        book1.pubYear = -5;
+        book1.price = 0;
+
+        console.log(book1.title);
+        console.log(book1.pubYear);
+        console.log(book1.price);
+
+        const books = [
+            new Book('Книга 1', 2018, 500),
+            new Book('Книга 2', 2022, 700),
+            new Book('Книга 3', 2015, 400)
+        ];
+
+        books.sort(Book.compare);
+        console.log('Отсортированные книги:');
+        console.log(books);
+
+        function isEmpty(obj) {
+            return Reflect.ownKeys(obj).length === 0;
+        }
+
+        console.log(isEmpty({}));
+        console.log(isEmpty({ [Symbol()]: true }));
+        console.log(isEmpty(Object.defineProperty({}, 'name', {
+            value: 'John'
+        })));
+
+        let obj = {
+            className: 'open menu',
+
+            addClass(cls) {
+                let classes = this.className.split(' ').filter(item => item !== '');
+
+                if (!classes.includes(cls)) {
+                    classes.push(cls);
+                }
+
+                this.className = classes.join(' ');
+                return this;
+            },
+
+            removeClass(cls) {
+                let classes = this.className.split(' ').filter(item => item !== cls && item !== '');
+                this.className = classes.join(' ');
+                return this;
+            }
+        };
+
+        console.log(obj.addClass('new'));
+        console.log(obj.addClass('open'));
+        console.log(obj.removeClass('menu'));
+        console.log(obj.removeClass('test'));
+
+        let user = {
+            name: 'John',
+            age: 25,
+            address: {
+                city: 'Moscow',
+                street: 'Lenina'
+            }
+        };
+
+        let json = JSON.stringify(user, null, 2);
+        console.log(json);
+
+        let obj2 = JSON.parse(json);
+        console.log(obj2);
+
+        console.log('Равны ли объекты по содержимому:',
+            JSON.stringify(user) === JSON.stringify(obj2)
+        );
+
+        function getSecondsToday() {
+            let now = new Date();
+            let startOfDay = new Date(
+                now.getFullYear(),
+                now.getMonth(),
+                now.getDate()
+            );
+
+            return Math.floor((now - startOfDay) / 1000);
+        }
+
+        console.log('Секунд с начала дня:', getSecondsToday());
+
+        function formatDate(date) {
+            let day = String(date.getDate()).padStart(2, '0');
+            let month = String(date.getMonth() + 1).padStart(2, '0');
+            let year = String(date.getFullYear()).slice(-2);
+
+            return day + '.' + month + '.' + year;
+        }
+
+        console.log(formatDate(new Date(2026, 4, 21)));
+        console.log(formatDate(new Date()));
+    </script>
+</body>
+</html>
