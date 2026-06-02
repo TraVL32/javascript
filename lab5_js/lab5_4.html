@@ -1,62 +1,56 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)https://fedyaevys.ru/javascript/lab5/menu.html -->
-<html lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	
-	<title>Меню</title>
-	<style>
-	    .menu ul {
-	      margin: 0;
-	      list-style: none;
-	      padding-left: 20px;
-	      display: none;
-	    }
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Меню</title>
+    <style>
+        .menu {
+            width: 220px;
+        }
 
-	    .menu .title {
-	      font-size: 18px;
-	      cursor: pointer;
-	    }
+        .title {
+            cursor: pointer;
+            user-select: none;
+            font-weight: bold;
+        }
 
-	    .menu .title::before {
-	      content: '▶';
-	      font-size: 80%;
-	      color: green;
-	      display: inline-block;		
-	      width: 18px;
+        .title::before {
+            content: "▶";
+            display: inline-block;
+            margin-right: 8px;
+        }
 
-	    }
+        .title.open::before {
+            content: "▼";
+        }
 
-	    .menu.open .title::before {
-	      content: '▼';
-	    }
+        ul {
+            margin-top: 10px;
+        }
 
-	    .menu.open ul {
-	      display: block;
-	    }
-	</style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-	<div class="menu open">
-		<span class="title ">Сладости (нажми меня)!</span>
-	 	<ul>
-	    	<li>Торт</li>
-	    	<li>Пончик</li>
-	    	<li>Пирожное</li>
-	  	</ul>
-	</div>
+    <div class="menu">
+        <div class="title">Сладости (нажми меня)!</div>
+        <ul class="hidden">
+            <li>Торт</li>
+            <li>Пончик</li>
+            <li>Пирожное</li>
+        </ul>
+    </div>
 
-	<script>
-    let title = document.querySelector('.title');
-    let list = document.querySelector('ul');
+    <script>
+        let title = document.querySelector('.title');
+        let list = document.querySelector('ul');
 
-    title.style.cursor = 'pointer';
-    
-    title.addEventListener('click', function() {
-        if (list.style.display === 'none') {
-            list.style.display = 'block';
-        } else {
-            list.style.display = 'none';
-        }
-    });
-</script>
-
-</body></html>
+        title.addEventListener('click', function () {
+            list.classList.toggle('hidden');
+            title.classList.toggle('open');
+        });
+    </script>
+</body>
+</html>
