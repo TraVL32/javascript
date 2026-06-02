@@ -97,8 +97,8 @@ export function fibs(n) {
 /**
  * Возвращает массив, отсортированный по убыванию.
  *
- * @param {number[]} arr - Исходный массив.
- * @returns {number[]} Новый массив, отсортированный по убыванию.
+ * @param {array[]} arr - Исходный массив.
+ * @returns {array[]} Новый массив, отсортированный по убыванию.
  */
 export function arrReverseSorted(arr) {
     return arr.slice().sort((a, b) => b - a);
