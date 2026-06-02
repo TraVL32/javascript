@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Лабораторная 6 - JS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            line-height: 1.6; }
+        section {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .placeholder-container {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .input-ph {
+            padding: 5px;
+            border: 1px solid #aaa;
+        }
+        .input-ph.placeholder {
+            color: blue;
+        }
+        .tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            background: #333;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: none;
+            margin-bottom: 5px;
+            white-space: nowrap;
+        }
+
+        #view {
+            border: 1px dashed #999;
+            padding: 10px;
+            min-height: 50px;
+            cursor: pointer;
+            background: #f9f9f9;
+        }
+        #edit {
+            width: 100%;
+            height: 80px;
+            display: none;
+            box-sizing: border-box;
+        }
+
+        #bagua-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 10px; }
+        #bagua-table th, #bagua-table td {
+            border: 1px solid #777;
+            padding: 10px;
+            width: 33%;
+            vertical-align: top;
+        }
+        .edit-area {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            border: none;
+            resize: none;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .edit-controls {
+            margin-top: 5px; text-align: right;
+        }
+        .edit-controls button {
+            margin-left: 5px;
+        }
+
+        #prompt-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 1000;
+        }
+        #prompt-form-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            min-width: 250px;
+        }
+        #prompt-message {
+            margin-bottom: 10px;
+        }
+        #prompt-form input[type="text"] {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        .prompt-btns {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+    <section id="task1">
+        <h3>1. Работа с select</h3>
+        <select id="music">
+            <option value="Rock">Рок</option>
+            <option value="Blues" selected>Блюз</option>
+        </select>
+        <p><i>Смотри результат в консоли (F12) и в самом селекте.</i></p>
+    </section>
+
+    <section id="task2">
+        <h3>2. Плейсхолдер-подсказка</h3>
+        <div class="placeholder-container">
+            <div class="tooltip" id="tooltip"></div>
+            <input type="text" class="input-ph" id="myInput" data-placeholder="Введите что-нибудь важное">
+        </div>
+    </section>
+
+    <section id="task3">
+        <h3>3. Редактирование по Ctrl+E / Сохранение по Ctrl+S</h3>
+        <p>Кликните по блоку ниже и нажмите <b>Ctrl+E</b> для редактирования, <b>Ctrl+S</b> для сохранения или <b>Esc</b> для отмены.</p>
+        <div id="view" tabindex="0">Это текст.<br>Его можно редактировать.</div>
+        <textarea id="edit"></textarea>
+    </section>
+
+    <section id="task4">
+        <h3>4. Таблица с редактируемыми ячейками</h3>
+        <p>Кликните на любую ячейку, чтобы отредактировать её HTML-содержимое.</p>
+        <table id="bagua-table">
+            <tr>
+                <td><b>Северо-запад</b><br>Металл<br>Серебро</td>
+                <td><b>Север</b><br>Вода<br>Синий</td>
+                <td><b>Северо-восток</b><br>Земля<br>Желтый</td>
+            </tr>
+            <tr>
+                <td><b>Запад</b><br>Металл<br>Золото</td>
+                <td><b>Центр</b><br>Все<br>Пурпурный</td>
+                <td><b>Восток</b><br>Дерево<br>Зеленый</td>
+            </tr>
+        </table>
+    </section>
+
+    <section id="task5">
+        <h3>5. Модальное окно showPrompt</h3>
+        <button id="showPromptBtn">Показать форму</button>
+    </section>
+
+    <div id="prompt-overlay">
+        <div id="prompt-form-container">
+            <form id="prompt-form">
+                <div id="prompt-message"></div>
+                <input type="text" name="text">
+                <div class="prompt-btns">
+                    <button type="submit" name="ok">OK</button>
+                    <button type="button" name="cancel">ОТМЕНА</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+
+        let select = document.getElementById('music');
+        
+        let selectedOption = select.options[select.selectedIndex];
+        console.log("Задача 1: Текущее значение =", selectedOption.value, "| Текст =", selectedOption.text);
+        
+        let newOption = new Option("Классика", "Classic");
+        select.append(newOption);
+        
+        newOption.selected = true;
+
+        let inputPh = document.getElementById('myInput');
+        let tooltip = document.getElementById('tooltip');
+        let placeholderText = inputPh.dataset.placeholder;
+
+        inputPh.value = placeholderText;
+        inputPh.classList.add('placeholder');
+
+        inputPh.addEventListener('focus', function() {
+            if (this.classList.contains('placeholder')) {
+                this.value = '';
+                this.classList.remove('placeholder');
+                
+                tooltip.textContent = placeholderText;
+                tooltip.style.display = 'block';
+            }
+        });
+
+        inputPh.addEventListener('blur', function() {
+            tooltip.style.display = 'none';
+            if (this.value === '') {
+                this.value = placeholderText;
+                this.classList.add('placeholder');
+            }
+        });
+
+        let view = document.getElementById('view');
+        let area = document.getElementById('edit');
+        let isEditing = false;
+        let originalHTML = "";
+
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.code === 'KeyE' && !isEditing) {
+                event.preventDefault();
+                startEdit();
+            }
+            if (event.ctrlKey && event.code === 'KeyS' && isEditing) {
+                event.preventDefault();
+                saveEdit();
+            }
+
+            if (event.code === 'Escape' && isEditing) {
+                cancelEdit();
+            }
+        });
+
+        function startEdit() {
+            isEditing = true;
+            originalHTML = view.innerHTML;
+            view.style.display = 'none';
+            area.style.display = 'block';
+            area.value = originalHTML;
+            area.focus();
+        }
+
+        function saveEdit() {
+            isEditing = false;
+            area.style.display = 'none';
+            view.style.display = 'block';
+            view.innerHTML = area.value;
+        }
+
+        function cancelEdit() {
+            isEditing = false;
+            area.style.display = 'none';
+            view.style.display = 'block';
+            view.innerHTML = originalHTML;
+        }
+
+        let table = document.getElementById('bagua-table');
+        let editingTd = null;
+
+        table.addEventListener('click', function(event) {
+            let td = event.target.closest('td');
+            if (!td) return;
+            if (!table.contains(td)) return;
+            
+            if (editingTd) return; 
+
+            startEditingTd(td);
+        });
+
+        function startEditingTd(td) {
+            editingTd = {
+                elem: td,
+                data: td.innerHTML
+            };
+
+            let editArea = document.createElement('textarea');
+            editArea.className = 'edit-area';
+            editArea.value = td.innerHTML;
+
+            let controls = document.createElement('div');
+            controls.className = 'edit-controls';
+            
+            let btnOk = document.createElement('button');
+            btnOk.textContent = 'OK';
+            
+            let btnCancel = document.createElement('button');
+            btnCancel.textContent = 'ОТМЕНА';
+
+            controls.append(btnOk, btnCancel);
+
+            btnOk.addEventListener('click', () => finishEditingTd(editArea.value));
+            btnCancel.addEventListener('click', () => finishEditingTd(editingTd.data));
+
+            td.innerHTML = '';
+            td.append(editArea, controls);
+            
+            editArea.focus();
+        }
+
+        function finishEditingTd(htmlData) {
+            editingTd.elem.innerHTML = htmlData;
+            editingTd = null;
+        }
+
+        function showPrompt(html, callback) {
+            let overlay = document.getElementById('prompt-overlay');
+            let form = document.getElementById('prompt-form');
+            let message = document.getElementById('prompt-message');
+            
+            message.innerHTML = html;
+            
+            form.elements.text.value = '';
+            
+            overlay.style.display = 'block';
+            
+            form.elements.text.focus();
+
+            let firstElem = form.elements.text;
+            let lastElem = form.elements.cancel;
+
+            form.onkeydown = function(e) {
+                if (e.key === 'Tab') {
+                    if (e.shiftKey) {
+                        if (document.activeElement === firstElem) {
+                            lastElem.focus();
+                            e.preventDefault();
+                        }
+                    } else {
+                        if (document.activeElement === lastElem) {
+                            firstElem.focus();
+                            e.preventDefault();
+                        }
+                    }
+                }
+                
+                if (e.key === 'Escape') {
+                    completePrompt(null);
+                }
+            };
+
+            form.onsubmit = function(e) {
+                e.preventDefault();
+                completePrompt(form.elements.text.value);
+            };
+
+            form.elements.cancel.onclick = function() {
+                completePrompt(null);
+            };
+
+            function completePrompt(value) {
+                overlay.style.display = 'none';
+                form.onkeydown = null;
+                form.onsubmit = null;
+                callback(value);
+            }
+        }
+
+        document.getElementById('showPromptBtn').addEventListener('click', function() {
+            showPrompt("Введите что-нибудь<br>... умное:)", function(value) {
+                if (value === null) {
+                    alert("Вы отменили ввод");
+                } else {
+                    alert("Вы ввели: " + value);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

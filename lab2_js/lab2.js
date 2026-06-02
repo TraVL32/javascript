@@ -3,7 +3,7 @@
 function pow(x, n) {
     return x ** n; 
 }
-
+// комментарии jsdoc
 const sumTo = new Function('n', 'return (n * (n + 1)) / 2;');
 
 function isLeapYear(year) {

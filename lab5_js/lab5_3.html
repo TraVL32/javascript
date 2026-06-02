@@ -1,0 +1,17 @@
+<div id="text">Абра-кадабра</div>
+<button id="toggleBtn">Скрыть текст</button>
+
+<script>
+    let btn = document.getElementById('toggleBtn');
+    let textDiv = document.getElementById('text');
+
+    btn.addEventListener('click', function() {
+        if (textDiv.style.display === 'none') {
+            textDiv.style.display = 'block';
+            btn.textContent = 'Скрыть текст';
+        } else {
+            textDiv.style.display = 'none';
+            btn.textContent = 'Показать текст';
+        }
+    });
+</script>

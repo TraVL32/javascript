@@ -1,7 +1,7 @@
 'use strict';
 
 import { fib } from './lab2.js';
-
+// комментарии jsdoc
 export function getDecimal(num) {
     let result = num - Math.floor(num);
     return parseFloat(result.toFixed(10));

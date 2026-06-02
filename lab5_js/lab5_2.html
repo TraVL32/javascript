@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Дерево</title>
+</head>
+<body>
+    <div id="container"></div>
+
+    <script>
+        let data = {
+            "Мороженое": {
+                "Вафельное": {},
+                "Ванильное": {},
+                "Фруктовое": {
+                        "Клубничное": {},
+                        "Лимонное": {}
+                }
+            },
+            "Шоколад": {
+                "Чёрный": {
+                    "Бабаевский": {}
+                },
+                "Молочный": {
+                    "Милка": {},
+                    "Альпен Голд": {}
+                }
+            }
+        };
+
+        function createTree(container, obj) {
+            if (Object.keys(obj).length === 0) return;
+
+            let ul = document.createElement('ul');
+
+            for (let key in obj) {
+                let li = document.createElement('li');
+                li.textContent = key;
+                
+                createTree(li, obj[key]);
+                
+                ul.append(li);
+            }
+
+            container.append(ul);
+        }
+
+        let container = document.getElementById('container');
+        createTree(container, data);
+    </script>
+</body>
+</html>
