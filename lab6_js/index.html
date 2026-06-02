@@ -197,13 +197,22 @@
         inputPh.value = placeholderText;
         inputPh.classList.add('placeholder');
 
-        inputPh.addEventListener('focus', function() {
+        inputPh.addEventListener('focus', function () {
+            tooltip.textContent = placeholderText;
+            tooltip.style.display = 'block';
+
             if (this.classList.contains('placeholder')) {
                 this.value = '';
                 this.classList.remove('placeholder');
-                
-                tooltip.textContent = placeholderText;
-                tooltip.style.display = 'block';
+            }
+        });
+
+        inputPh.addEventListener('blur', function () {
+            tooltip.style.display = 'none';
+
+            if (this.value.trim() === '') {
+                this.value = placeholderText;
+                this.classList.add('placeholder');
             }
         });
 
