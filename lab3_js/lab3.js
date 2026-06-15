@@ -82,7 +82,7 @@ export function camelize(str) {
  * Возвращает массив первых n чисел Фибоначчи.
  *
  * @param {number} n - Количество чисел.
- * @returns {bigint[]} Массив чисел Фибоначчи.
+ * @returns {Array} Массив чисел Фибоначчи.
  */
 export function fibs(n) {
     let resultArr = [];
@@ -95,8 +95,8 @@ export function fibs(n) {
 /**
  * Возвращает массив, отсортированный по убыванию.
  *
- * @param {number[]} arr - Исходный массив.
- * @returns {number[]} Новый массив, отсортированный по убыванию.
+ * @param {Array} arr - Исходный массив.
+ * @returns {Array} Новый массив, отсортированный по убыванию.
  */
 export function arrReverseSorted(arr) {
     return arr.slice().sort((a, b) => b - a);
