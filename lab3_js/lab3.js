@@ -1,16 +1,16 @@
 'use strict';
 
-import { fib } from './lab2.js';
+import { fib } from './lab2_module.js';
 
 /**
  * Возвращает дробную часть числа.
  *
- * @param {number} num - Число.
+ * @param {number} num - Исходное число.
  * @returns {number} Дробная часть числа.
  */
 export function getDecimal(num) {
-    let result = num - Math.floor(num);
-    return parseFloat(result.toFixed(10));
+    let fractional = num - Math.floor(num);
+    return parseFloat(fractional.toFixed(10));
 }
 
 /**
@@ -26,7 +26,7 @@ export function normalizeUrl(url) {
         return url.replace('http://', 'https://');
     } else {
         return 'https://' + url;
-}
+    }
 }
 
 /**
@@ -51,7 +51,6 @@ export function truncate(str, maxlength) {
     if (str.length > maxlength) {
         return str.slice(0, maxlength - 1) + '…';
     }
-    
     return str;
 }
 
@@ -63,8 +62,8 @@ export function truncate(str, maxlength) {
  */
 function ucFirst(str) {
     if (!str) return str;
-        return str[0].toUpperCase() + str.slice(1);
-    }
+    return str[0].toUpperCase() + str.slice(1);
+}
 
 /**
  * Преобразует строку из kebab-case в camelCase.
@@ -90,15 +89,14 @@ export function fibs(n) {
     for (let i = 0; i < n; i++) {
         resultArr.push(fib(i));
     }
-    
     return resultArr;
 }
 
 /**
  * Возвращает массив, отсортированный по убыванию.
  *
- * @param {array[]} arr - Исходный массив.
- * @returns {array[]} Новый массив, отсортированный по убыванию.
+ * @param {number[]} arr - Исходный массив.
+ * @returns {number[]} Новый массив, отсортированный по убыванию.
  */
 export function arrReverseSorted(arr) {
     return arr.slice().sort((a, b) => b - a);
@@ -112,15 +110,4 @@ export function arrReverseSorted(arr) {
  */
 export function unique(arr) {
     return Array.from(new Set(arr));
-}
-
-if (typeof window !== 'undefined') {
-window.getDecimal = getDecimal;
-window.normalizeUrl = normalizeUrl;
-window.checkSpam = checkSpam;
-window.truncate = truncate;
-window.camelize = camelize;
-window.fibs = fibs;
-window.arrReverseSorted = arrReverseSorted;
-window.unique = unique;
 }
