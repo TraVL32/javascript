@@ -7,57 +7,6 @@
 <body>
     <h1>Лабораторная работа 4</h1>
     <p>Открой консоль браузера</p>
-
-    <script>
-        class Book {
-            #price;
-
-            constructor(title, pubYear, price) {
-                this.title = title;
-                this._pubYear = pubYear;
-                this.#price = price;
-            }
-
-            get pubYear() {
-                return this._pubYear;
-            }
-
-            set pubYear(value) {
-                if (typeof value === 'number' && value > 0) {
-                    this._pubYear = value;
-                }
-            }
-
-            get price() {
-                return this.#price;
-            }
-
-            set price(value) {
-                if (typeof value === 'number' && value > 0) {
-                    this.#price = value;
-                }
-            }
-
-            show() {
-                console.log('Книга:', this.title);
-                console.log('Год издания:', this._pubYear);
-                console.log('Цена:', this.#price);
-            }
-        }
-
-        let book = new Book('Мастер и Маргарита', 1967, 500);
-
-        console.log('Исходные значения:');
-        book.show();
-
-        book._pubYear = 2000;
-        book.price = 1000;
-
-        console.log('После попытки изменить свойства:');
-        book.show();
-
-        console.log('Доступ к pubYear:', book.pubYear);
-        console.log('Доступ к price через getter:', book.price);
-    </script>
+    <script src="lab4.js" type="module"></script>
 </body>
 </html>
