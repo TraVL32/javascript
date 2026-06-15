@@ -9,66 +9,55 @@
     <p>Открой консоль браузера</p>
 
     <script>
-    class Book {
-        #price;
+        class Book {
+            #price;
 
-        constructor(title, author, pubYear, price) {
-            this.title = title;
-            this.author = author;
-            this._pubYear = pubYear;
-            this.#price = price;
-        }
+            constructor(title, pubYear, price) {
+                this.title = title;
+                this._pubYear = pubYear;
+                this.#price = price;
+            }
 
-        get pubYear() {
-            return this._pubYear;
-        }
+            get pubYear() {
+                return this._pubYear;
+            }
 
-        set pubYear(value) {
-            if (value > 0) {
-                this._pubYear = value;
+            set pubYear(value) {
+                if (typeof value === 'number' && value > 0) {
+                    this._pubYear = value;
+                }
+            }
+
+            get price() {
+                return this.#price;
+            }
+
+            set price(value) {
+                if (typeof value === 'number' && value > 0) {
+                    this.#price = value;
+                }
+            }
+
+            show() {
+                console.log('Книга:', this.title);
+                console.log('Год издания:', this._pubYear);
+                console.log('Цена:', this.#price);
             }
         }
 
-        getPrice() {
-            return this.#price;
-        }
+        let book = new Book('Мастер и Маргарита', 1967, 500);
 
-        setPrice(value) {
-            if (value > 0) {
-                this.#price = value;
-            }
-        }
+        console.log('Исходные значения:');
+        book.show();
 
-        showInfo() {
-            console.log("Название:", this.title);
-            console.log("Автор:", this.author);
-            console.log("Год издания:", this._pubYear);
-            console.log("Цена:", this.#price);
-        }
-    }
+        book._pubYear = 2000;
+        book.price = 1000;
 
-    const book1 = new Book("Мастер и Маргарита", "Михаил Булгаков", 1967, 500);
+        console.log('После попытки изменить свойства:');
+        book.show();
 
-    console.log("Исходные данные:");
-    book1.showInfo();
-
-    book1.pubYear = 2000;
-    console.log("После изменения pubYear:");
-    console.log(book1.pubYear);
-
-    book1._pubYear = 2010;
-    console.log("После прямого изменения _pubYear:");
-    console.log(book1.pubYear);
-
-    book1.price = 1000;
-    console.log("После попытки изменить price напрямую:");
-    console.log(book1.price);
-
-    book1.setPrice(1200);
-    console.log("После изменения price через метод:");
-    console.log(book1.getPrice());
-
-    book1.showInfo();
-</script>
+        console.log('Доступ к pubYear:', book.pubYear);
+        console.log('Доступ к price через getter:', book.price);
+    </script>
 </body>
 </html>
